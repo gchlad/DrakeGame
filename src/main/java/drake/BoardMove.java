@@ -36,4 +36,9 @@ public abstract class BoardMove extends Move {
             return false;
         return true;
     }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "{" + origin + "->" + target + '}';
+    }
 }

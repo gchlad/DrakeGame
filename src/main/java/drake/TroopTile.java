@@ -1,9 +1,10 @@
 package drake;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TroopTile implements Tile {
+public class TroopTile implements Tile, JSONSerializable {
     private final Troop troop;
     private final PlayingSide side;
     private final TroopFace face;
@@ -44,5 +45,20 @@ public class TroopTile implements Tile {
     public List<Move> movesFrom(BoardPos pos, GameState state) {
         //TODO: possible moves
         return null;
+    }
+
+    @Override
+    public void toJSON(PrintWriter writer) {
+        writer.printf("{\"troop\":");
+        troop.toJSON(writer);
+
+        String color = side.equals(PlayingSide.BLUE) ? "BLUE":"ORANGE";
+
+        writer.printf(",\"side\":\"%s\",", color);
+
+        writer.print("\"face\":");
+        face.toJSON(writer);
+
+        writer.print("}");
     }
 }

@@ -1,8 +1,9 @@
 package drake;
 
+import java.io.PrintWriter;
 import java.util.*;
 
-public class BoardTroops {
+public class BoardTroops implements JSONSerializable{
     private final PlayingSide playingSide;
     private final Map<BoardPos, TroopTile> troopMap;
     private final TilePos leaderPosition;
@@ -132,5 +133,33 @@ public class BoardTroops {
 
         TilePos newLeaderPosition = leaderPosition.equals(target)? TilePos.OFF_BOARD : leaderPosition;
         return new BoardTroops(playingSide(), newTroops, newLeaderPosition, guards);
+    }
+
+    @Override
+    public void toJSON(PrintWriter writer) {
+        writer.print("{");
+
+        writer.print("\"side\":\"");
+        String color = playingSide.equals(PlayingSide.BLUE)? "BLUE":"ORANGE";
+        writer.print(color);
+
+        writer.print("\",\"leaderPosition\":\"");
+        writer.print(leaderPosition.toString());
+
+        writer.printf("\",\"guards\":%d,", guards);
+
+        writer.print("\"troopMap\":{");
+        int i = 0;
+        Map<BoardPos, TroopTile> armyPos = new TreeMap<>(troopMap);
+        for (Map.Entry<BoardPos, TroopTile> entry : armyPos.entrySet()) {
+            writer.printf("\"%s\":", entry.getKey().toString());
+            entry.getValue().toJSON(writer);
+            if ( i+1 != troopMap.keySet().size() )
+                writer.print(",");
+            i++;
+        }
+        writer.print("}");
+
+        writer.print("}");
     }
 }

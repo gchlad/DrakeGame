@@ -1,8 +1,9 @@
 package drake;
 
+import java.io.PrintWriter;
 import java.util.List;
 
-public interface TilePos {
+public interface TilePos extends JSONSerializable{
     public static final TilePos OFF_BOARD = new TilePos() {
 
         @Override
@@ -53,6 +54,16 @@ public interface TilePos {
         @Override
         public boolean equalsTo(int i, int j) {
             return false;
+        }
+
+        @Override
+        public String toString() {
+            return "off-board";
+        }
+
+        @Override
+        public void toJSON(PrintWriter writer) {
+            writer.print("\"off-board\"");
         }
     };
 

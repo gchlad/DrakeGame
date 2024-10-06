@@ -1,10 +1,11 @@
 package drake;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Army {
+public class Army implements JSONSerializable {
     private final BoardTroops boardTroops;
     private final List<Troop> stack;
     private final List<Troop> captured;
@@ -77,5 +78,29 @@ public class Army {
         newCaptured.add(troop);
 
         return new Army(boardTroops, stack, newCaptured);
+    }
+
+    @Override
+    public void toJSON(PrintWriter writer) {
+        writer.printf("{\"boardTroops\":");
+        boardTroops.toJSON(writer);
+        writer.print(",");
+
+        writer.print("\"stack\":[");
+        for (int i = 0; i < stack.size(); i++) {
+            stack.get(i).toJSON(writer);
+            if ( i < stack.size()-1 )
+                writer.print(",");
+        }
+        writer.print("],");
+
+        writer.print("\"captured\":[");
+        for (int i = 0; i < captured.size(); i++) {
+            captured.get(i).toJSON(writer);
+            if ( i < captured.size()-1 )
+                writer.print(",");
+        }
+
+        writer.print("]}");
     }
 }

@@ -1,8 +1,9 @@
 package drake;
 
+import java.io.PrintWriter;
 import java.util.List;
 
-public class Troop {
+public class Troop implements JSONSerializable{
     private final String name;
     private final Offset2D aversPivot;
     private final Offset2D reversPivot;
@@ -39,5 +40,10 @@ public class Troop {
 
     public List<TroopAction> actions(TroopFace face) {
         return face == TroopFace.AVERS ? aversActions : reversActions;
+    }
+
+    @Override
+    public void toJSON(PrintWriter writer) {
+        writer.printf("\"%s\"", name);
     }
 }
