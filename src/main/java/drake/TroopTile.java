@@ -43,8 +43,15 @@ public class TroopTile implements Tile, JSONSerializable {
 
     @Override
     public List<Move> movesFrom(BoardPos pos, GameState state) {
-        //TODO: possible moves
-        return null;
+        List<Move> moves = new ArrayList<>();
+        List<TroopAction> actions = troop.actions(this.face);
+
+        for (TroopAction action : actions) {
+            List<Move> actionMoves = action.movesFrom(pos, side, state);
+            moves.addAll(actionMoves);
+        }
+
+        return moves;
     }
 
     @Override
