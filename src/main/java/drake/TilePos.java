@@ -67,23 +67,23 @@ public interface TilePos extends JSONSerializable{
         }
     };
 
-    public int i();
+    int i();
 
-    public int j();
+    int j();
 
-    public char column();
+    char column();
 
-    public int row();
+    int row();
 
-    public TilePos step(int columnStep, int rowStep);
+    TilePos step(int columnStep, int rowStep);
 
-    public TilePos step(Offset2D step);
+    TilePos step(Offset2D step);
 
-    public List<? extends TilePos> neighbours();
+    List<? extends TilePos> neighbours();
 
-    public boolean isNextTo(TilePos pos);
+    boolean isNextTo(TilePos pos);
 
-    public TilePos stepByPlayingSide(Offset2D dir, PlayingSide side);
+    TilePos stepByPlayingSide(Offset2D dir, PlayingSide side);
 
-    public boolean equalsTo(int i, int j);
+    boolean equalsTo(int i, int j);
 }

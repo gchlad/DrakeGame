@@ -84,7 +84,7 @@ public class BoardTroops implements JSONSerializable{
         if (!isLeaderPlaced() || isPlacingGuards()) {
             throw new IllegalStateException("Leader and guards placing, not allowed to move tiles.");
         }
-        if (!at(origin).isPresent() || at(target).isPresent()) {
+        if (at(origin).isEmpty() || at(target).isPresent()) {
             throw new IllegalArgumentException("Target position occupied or origin position empty.");
         }
 
@@ -108,7 +108,7 @@ public class BoardTroops implements JSONSerializable{
                     "Cannot move troops before guards are placed.");
         }
 
-        if (!at(origin).isPresent())
+        if (at(origin).isEmpty())
             throw new IllegalArgumentException();
 
         Map<BoardPos, TroopTile> newTroops = new HashMap<>(troopMap);
@@ -124,7 +124,7 @@ public class BoardTroops implements JSONSerializable{
                     "Cannot move troops before the leader and guard are placed.");
         }
 
-        if (!at(target).isPresent()) {
+        if (at(target).isEmpty()) {
             throw new IllegalArgumentException();
         }
 
